@@ -7,8 +7,6 @@ import pt.iscte.poo.utils.Point2D;
 import java.util.Random;
 
 public class Baba extends GameCharacter {
-
-    private Point2D position;
     private String direction = "r";
 
     public Baba(Point2D position) {

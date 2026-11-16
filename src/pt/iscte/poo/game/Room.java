@@ -74,8 +74,8 @@ public class Room {
             int cols = 0;
             if (sc.hasNextLine()) {
                 String[] parts = sc.nextLine().split(",");
-                rows = Integer.parseInt(parts[0]);
-                cols = Integer.parseInt(parts[1]);
+                rows = Integer.parseInt(parts[1]);
+                cols = Integer.parseInt(parts[0]);
             }
 
             if (rows <= 0 && cols <= 0) {
@@ -87,7 +87,7 @@ public class Room {
                 String line = sc.nextLine();
                 int j = 0;
                 for (char c: line.toCharArray()) {
-                    ImageTile object = createObject(c, i, j);
+                    ImageTile object = createObject(c, j, i);
                     j++;
 
                     if (object != null) {
@@ -106,7 +106,7 @@ public class Room {
 
 
 
-        Baba baba = new Baba(new Point2D(5, 5));
+        Baba baba = new Baba(new Point2D(2, 3));
         r.addObject(baba);
         r.player = baba;
         return r;
