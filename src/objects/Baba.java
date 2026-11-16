@@ -21,11 +21,6 @@ public class Baba extends GameCharacter {
         return "baba-" + direction;
     }
 
-    // @Override
-    // public Point2D getPosition() {
-    //     return position;
-    // }
-
     @Override
     public int getLayer() {
         return 25;

@@ -1,6 +1,5 @@
 package objects;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.game.Room;
 import pt.iscte.poo.utils.Direction;
 
 public abstract class MovableObject extends GameObject {

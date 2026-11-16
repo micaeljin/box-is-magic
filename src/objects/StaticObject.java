@@ -9,19 +9,4 @@ public abstract class StaticObject extends GameObject {
     }
 
     public abstract boolean isTransposable();
-    // @Override 
-    // public String getName() {
-    //     return ""; 
-    // }
-
-    // @Override 
-    // public Point2D getPosition() {
-    //     return super.getPosition();
-    // }
-
-    // @Override 
-    // public int getLayer() {
-    //     return 0;
-    // }
-
 }

@@ -3,8 +3,6 @@ package objects;
 import pt.iscte.poo.utils.Point2D;
 
 public class Grass extends StaticObject {
-
-    private Point2D position;
     
     public Grass(Point2D position) {
         super(position);
@@ -14,11 +12,6 @@ public class Grass extends StaticObject {
     public String getName() {
         return "grass";
     }
-
-    // @Override
-    // public Point2D getPosition() {
-    //     return position;
-    // }
 
     @Override
     public int getLayer() {
