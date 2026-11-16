@@ -4,12 +4,11 @@ import pt.iscte.poo.utils.Point2D;
 
 public abstract class StaticObject extends GameObject {
     
-
-    protected StaticObject(Point2D position) {
+    public StaticObject(Point2D position) {
         super(position);
     }
 
-    
+    public abstract boolean isTransposable();
     // @Override 
     // public String getName() {
     //     return ""; 
