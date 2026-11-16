@@ -6,13 +6,14 @@ import pt.iscte.poo.utils.Point2D;
 
 import java.util.Random;
 
-public class Baba implements ImageTile {
+public class Baba extends GameCharacter {
 
     private Point2D position;
     private String direction = "r";
 
     public Baba(Point2D position) {
-        this.position = position;
+        // this.position = position;
+        super(position);
     }
 
     @Override
@@ -20,10 +21,10 @@ public class Baba implements ImageTile {
         return "baba-" + direction;
     }
 
-    @Override
-    public Point2D getPosition() {
-        return position;
-    }
+    // @Override
+    // public Point2D getPosition() {
+    //     return position;
+    // }
 
     @Override
     public int getLayer() {
@@ -31,7 +32,8 @@ public class Baba implements ImageTile {
     }
 
     public void move(Direction d) {
-        Random rand = new Random();
-        position = new Point2D(rand.nextInt(10), rand.nextInt(10));
+        super.move(d);
+        // Random rand = new Random();
+        // position = new Point2D(rand.nextInt(10), rand.nextInt(10));
     }
 }
