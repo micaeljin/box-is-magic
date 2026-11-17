@@ -1,6 +1,5 @@
 package pt.iscte.poo.game;
 
-import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,6 @@ public class Room {
     }
 
 
-
     private static GameObject createObject(char c, int i, int j) {
         if (c == ' ') {
             GameObject dirt = new Dirt(new Point2D(i, j));
@@ -107,7 +105,7 @@ public class Room {
                 cols = Integer.parseInt(parts[0]);
             }
 
-            if (rows <= 0 && cols <= 0) {
+            if (rows <= 0 || cols <= 0) {
                 System.out.println("Dimensoes de mapa invalida");
                 return null;
             }
@@ -130,40 +128,20 @@ public class Room {
         } catch(Exception e) {
             System.out.println("Ficheiro Invalido");
         } finally {
-            sc.close();
+            if (sc != null) {
+                sc.close();
+            }
         }
-
 
 
         Baba baba = new Baba(new Point2D(2, 3));
         r.addObject(baba);
         r.player = baba;
+        INSTANCE = r;
         return r;
-
-
-
-
-
-
-        // Room r = new Room();
-        // r.setName(f.getName());
-
-        // for (int i = 0; i <= 10; i++) {
-        //     ImageTile dirt = new Dirt(new Point2D(i, i));
-        //     r.addObject(dirt);
-        //     ImageTile dirt2 = new Dirt(new Point2D(10 - i, i));
-        //     r.addObject(dirt2);
-        // }
-
-        // Baba baba = new Baba(new Point2D(5, 5));
-        // r.addObject(baba);
-
-        // r.player = baba;
-        // return r;
     }
 
     public Baba getPlayer() {
         return player;
     }
-
 }
