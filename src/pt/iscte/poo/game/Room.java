@@ -1,5 +1,6 @@
 package pt.iscte.poo.game;
 
+import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,14 @@ public class Room {
     private List<GameObject> objects;
     private String roomName;
     private Baba player;
+    private static Room INSTANCE = new Room();
 
-    public Room() {
+    private Room() {
         objects = new ArrayList<>();
+    }
+
+    public static Room getInstance() {
+        return INSTANCE;
     }
 
     private void setName(String name) {
@@ -41,6 +47,29 @@ public class Room {
     public List<GameObject> getObjects() {
         return objects;
     }
+
+    private List<GameObject> getObjects(Point2D position) {
+        List<GameObject> res = new ArrayList<>();
+        for (GameObject ob: objects) {
+            if (ob.getPosition().getX() == position.getX() &&
+                ob.getPosition().getY() == position.getY()) {
+                    res.add(ob);
+                }
+        }
+        return res;
+    }
+
+    public boolean canMove(Point2D position) {
+        List<GameObject> objs = getObjects(position);
+        for (GameObject obj: objs) {
+            if (!obj.isTransposable()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
     private static GameObject createObject(char c, int i, int j) {
         if (c == ' ') {
