@@ -7,8 +7,9 @@ import pt.iscte.poo.utils.Point2D;
 public class Baba extends GameCharacter {
     private String direction = "r";
 
-    public Baba(Point2D position) {
+    public Baba(Point2D position, String direction) {
         super(position);
+        this.direction = direction;
     }
 
     @Override
