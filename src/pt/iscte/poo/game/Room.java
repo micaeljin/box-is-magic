@@ -6,7 +6,7 @@ import java.util.List;
 
 import objects.Baba;
 import objects.Dirt;
-import pt.iscte.poo.gui.ImageTile;
+import objects.GameObject;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.Scanner;
@@ -18,7 +18,7 @@ import objects.Hole;
 
 public class Room {
 
-    private List<ImageTile> objects;
+    private List<GameObject> objects;
     private String roomName;
     private Baba player;
 
@@ -34,29 +34,29 @@ public class Room {
         return roomName;
     }
 
-    public void addObject(ImageTile obj) {
+    public void addObject(GameObject obj) {
         objects.add(obj);
     }
 
-    public List<ImageTile> getObjects() {
+    public List<GameObject> getObjects() {
         return objects;
     }
 
-    private static ImageTile createObject(char c, int i, int j) {
+    private static GameObject createObject(char c, int i, int j) {
         if (c == ' ') {
-            ImageTile dirt = new Dirt(new Point2D(i, j));
+            GameObject dirt = new Dirt(new Point2D(i, j));
             return dirt;
         } else if (c == 'X') {
-            ImageTile wall = new Wall(new Point2D(i, j));
+            GameObject wall = new Wall(new Point2D(i, j));
             return wall;
         } else if (c == 'x') {
-            ImageTile crackedWall = new CrackedWall(new Point2D(i, j));
+            GameObject crackedWall = new CrackedWall(new Point2D(i, j));
             return crackedWall;
         } else if (c == 'g') {
-            ImageTile grass = new Grass(new Point2D(i, j));
+            GameObject grass = new Grass(new Point2D(i, j));
             return grass;
         } else if (c == 'H') {
-            ImageTile hole = new Hole(new Point2D(i, j));
+            GameObject hole = new Hole(new Point2D(i, j));
             return hole;
         } else {
             return null;
@@ -87,7 +87,7 @@ public class Room {
                 String line = sc.nextLine();
                 int j = 0;
                 for (char c: line.toCharArray()) {
-                    ImageTile object = createObject(c, j, i);
+                    GameObject object = createObject(c, j, i);
                     j++;
 
                     if (object != null) {

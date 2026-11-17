@@ -1,16 +1,13 @@
 package objects;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-import java.util.Random;
 
 public class Baba extends GameCharacter {
     private String direction = "r";
 
     public Baba(Point2D position) {
-        // this.position = position;
         super(position);
     }
 
@@ -23,10 +20,8 @@ public class Baba extends GameCharacter {
     public int getLayer() {
         return 25;
     }
-
+    
     public void move(Direction d) {
         super.move(d);
-        // Random rand = new Random();
-        // position = new Point2D(rand.nextInt(10), rand.nextInt(10));
     }
 }

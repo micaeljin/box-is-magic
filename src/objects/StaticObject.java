@@ -8,5 +8,5 @@ public abstract class StaticObject extends GameObject {
         super(position);
     }
 
-    public abstract boolean isTransposable();
+    
 }

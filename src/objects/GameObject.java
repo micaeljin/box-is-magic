@@ -28,4 +28,8 @@ public abstract class GameObject implements ImageTile {
         return 0;
     }
 
+    public boolean isTransposable() {
+        return true;
+    }
+
 }
