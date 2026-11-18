@@ -10,8 +10,6 @@ import objects.GameObject;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.Scanner;
-import java.util.Vector;
-import pt.iscte.poo.utils.Direction;
 
 import objects.GameCharacter;
 import objects.Grass;

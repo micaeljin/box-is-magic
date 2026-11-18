@@ -14,7 +14,7 @@ public abstract class GameCharacter extends MovableObject {
     @Override
     public boolean move(Direction d) {
         direction = d;
-        return super.move(d);
+        return super.move(direction);
     }
 
     public static Direction directionFromLetter(String letter) {
