@@ -48,8 +48,7 @@ public class Room {
     private List<GameObject> getObjects(Point2D position) {
         List<GameObject> res = new ArrayList<>();
         for (GameObject ob: objects) {
-            if (ob.getPosition().getX() == position.getX() &&
-                ob.getPosition().getY() == position.getY()) {
+            if (ob.getPosition().equals(position)) {
                     res.add(ob);
                 }
         }
@@ -107,7 +106,6 @@ public class Room {
         return null;
     }
     
-
 
 
     public static Room readRoom(File f) {

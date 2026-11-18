@@ -18,9 +18,4 @@ public class CrackedWall extends StaticObject {
         return 1;
     }
 
-    @Override 
-    public boolean isTransposable() {
-        return true;
-    }
-    
 }

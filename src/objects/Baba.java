@@ -29,7 +29,7 @@ public class Baba extends GameCharacter {
         return 3;
     }
     
-    public void move(Direction d) {
-        super.move(d);
+    public boolean move(Direction d) {
+        return super.move(d);
     }
 }

@@ -17,10 +17,4 @@ public class Hole extends StaticObject {
     public int getLayer() {
         return 1;
     }
-
-    @Override 
-    public boolean isTransposable() {
-        return true;
-    }
-    
 }

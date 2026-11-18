@@ -7,6 +7,4 @@ public abstract class StaticObject extends GameObject {
     public StaticObject(Point2D position) {
         super(position);
     }
-
-    
 }

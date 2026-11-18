@@ -17,9 +17,4 @@ public class Dirt extends StaticObject {
     public int getLayer() {
         return 0;
     }
-
-    @Override 
-    public boolean isTransposable() {
-        return true;
-    }
 }

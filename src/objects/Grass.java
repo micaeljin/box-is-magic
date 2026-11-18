@@ -18,9 +18,4 @@ public class Grass extends StaticObject {
         return 1;
     }
 
-    @Override 
-    public boolean isTransposable() {
-        return true;
-    }
-    
 }

@@ -8,11 +8,6 @@ public abstract class GameObject implements ImageTile {
     public GameObject(Point2D position) {
         this.position = position;
     }
-    
-    @Override 
-    public String getName() {
-        return ""; 
-    }
 
     public void setPosition(Point2D position) {
         this.position = position;
@@ -21,11 +16,6 @@ public abstract class GameObject implements ImageTile {
     @Override 
     public Point2D getPosition() {
         return position;
-    }
-
-    @Override 
-    public int getLayer() {
-        return 0;
     }
 
     public boolean isTransposable() {

@@ -11,14 +11,15 @@ public abstract class MovableObject extends GameObject {
         super(position);
     }
 
-    public void move(Direction d) {
+    public boolean move(Direction d) {
         Point2D dest = getPosition().plus(d.asVector());
         
         Room r = GameEngine.getInstance().getCurrentRoom();
         if(!r.canMove(dest)) {
-            return;
+            return false;
         }
         
         setPosition(dest);
+        return true;
     }
 }
