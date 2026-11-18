@@ -18,13 +18,25 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private GameEngine() {
-        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room0.txt"));
-        updateGUI();
+        // currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room0.txt"));
+        loadRoom(0);
+        // updateGUI();
     }
 
 	public static GameEngine getInstance() {
 		return INSTANCE;
 	}
+
+    public Room getCurrentRoom() { 
+        return currentRoom; 
+    }
+
+    private void loadRoom(int n) {
+    currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + n + ".txt"));
+    ImageGUI.getInstance().clearImages();
+    ImageGUI.getInstance().addImages(currentRoom.getObjects());
+}
+
 
     @Override
     public void update(Observed source) {
@@ -35,7 +47,7 @@ public class GameEngine implements Observer {
             if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_UP || k == KeyEvent.VK_DOWN) {
                 Direction d = Direction.directionFor(k);
                 getPlayer().move(d);
-                updateGUI();
+                // updateGUI();
             }
         }
         int t = ImageGUI.getInstance().getTicks();
@@ -51,8 +63,9 @@ public class GameEngine implements Observer {
 
     public void updateGUI() {
         if (currentRoom != null) {
-            ImageGUI.getInstance().clearImages();
-            ImageGUI.getInstance().addImages(currentRoom.getObjects());
+            // ImageGUI.getInstance().clearImages();
+            // ImageGUI.getInstance().addImages(currentRoom.getObjects());
+            GameEngine.getInstance().update(null);
         }
     }
 

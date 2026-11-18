@@ -1,9 +1,30 @@
 package objects;
 
+import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 public abstract class GameCharacter extends MovableObject {
-    public GameCharacter(Point2D position) {
+    private Direction direction;
+
+    public GameCharacter(Point2D position, Direction direction) {
         super(position);
+        this.direction = direction;
+    }
+
+    @Override
+    public void move(Direction d) {
+        direction = d;
+        super.move(d);
+    }
+
+    public static Direction directionFromLetter(String letter) {
+        switch (letter.trim().toLowerCase()) {
+            case "u": return Direction.UP;
+            case "d": return Direction.DOWN;
+            case "l": return Direction.LEFT;
+            case "r": return Direction.RIGHT;
+            default:
+                throw new IllegalArgumentException("Direcao invalida: " + letter);
+        }
     }
 }

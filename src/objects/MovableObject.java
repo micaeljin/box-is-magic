@@ -1,5 +1,6 @@
 package objects;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.utils.Direction;
 
@@ -10,14 +11,10 @@ public abstract class MovableObject extends GameObject {
         super(position);
     }
 
-    private Room getRoom() {
-        return Room.getInstance();
-    }
-
     public void move(Direction d) {
         Point2D dest = getPosition().plus(d.asVector());
         
-        Room r = getRoom();
+        Room r = GameEngine.getInstance().getCurrentRoom();
         if(!r.canMove(dest)) {
             return;
         }

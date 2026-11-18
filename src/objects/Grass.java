@@ -15,7 +15,7 @@ public class Grass extends StaticObject {
 
     @Override
     public int getLayer() {
-        return 5;
+        return 1;
     }
 
     @Override 

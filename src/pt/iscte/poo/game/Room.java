@@ -10,9 +10,10 @@ import objects.GameObject;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.Scanner;
+import java.util.Vector;
+import pt.iscte.poo.utils.Direction;
 
-import javax.swing.Box;
-
+import objects.GameCharacter;
 import objects.Grass;
 import objects.Wall;
 import objects.CrackedWall;
@@ -23,14 +24,9 @@ public class Room {
     private List<GameObject> objects;
     private String roomName;
     private Baba player;
-    private static Room INSTANCE = new Room();
 
-    private Room() {
+    public Room() {
         objects = new ArrayList<>();
-    }
-
-    public static Room getInstance() {
-        return INSTANCE;
     }
 
     private void setName(String name) {
@@ -71,60 +67,49 @@ public class Room {
     }
 
 
-    private static GameObject createStaticObject(char c, int i, int j) {
+    private static GameObject createStaticObject(char c, Point2D p) {
         if (c == ' ') {
-            GameObject dirt = new Dirt(new Point2D(i, j));
-            return dirt;
+            return new Dirt(p);
         } else if (c == 'X') {
-            GameObject wall = new Wall(new Point2D(i, j));
-            return wall;
+            return new Wall(p);
         } else if (c == 'x') {
-            GameObject crackedWall = new CrackedWall(new Point2D(i, j));
-            return crackedWall;
+            return new CrackedWall(p);
         } else if (c == 'g') {
-            GameObject grass = new Grass(new Point2D(i, j));
-            return grass;
+            return new Grass(p);
         } else if (c == 'H') {
-            GameObject hole = new Hole(new Point2D(i, j));
-            return hole;
+              return new Hole(p);
         } else {
             return null;
         }
     }
 
-    private static GameObject createMovableObject(String s, int i, int j) {
+    private static GameObject createMovableObject(String s, Point2D p) {
         // if (s.equals("rock")) {
-        //     GameObject rock = new Rock(new Point2D(i, j));
-        //     return rock;
+        //     return new Rock(p);
         // } else if (s.equals("flag")) {
-        //     GameObject flag = new Flag(new Point2D(i, j));
-        //     return flag;
+        //     return new Flag(p);
         // } else if (s.equals("box")) {
-        //     GameObject box = new Box(new Point2D(i, j));
-        //     return box;
+        //     return new Box(p);
         // } else if (s.equals("bomb")) {
-        //     GameObject bomb = new Bomb(new Point2D(i, j));
-        //     return bomb;
+        //     return new Bomb(p);
         // } else if (s.equals("wordIs")) {
-        //     GameObject wordIs = new WordIs(new Point2D(i, j));
-        //     return wordIs;
+        //     return new WordIs(p);
         // } else if (s.equals("wordBox")) {
-        //     GameObject wordBox = new WordBox(new Point2D(i, j));
-        //     return wordBox;
+        //     return new WordBox(p);
         // } else if (s.equals("wordStop")) {
-        //     GameObject wordStop= new WordStop(new Point2D(i, j));
-        //     return wordStop;
+        //     return new WordStop(p);
         // } else if (s.equals("wordMove")) {
-        //     GameObject wordMove = new WordMove(new Point2D(i, j));
-        //     return wordMove;
+        //     return new WordMove(p);
         // } else if (s.equals("wordWin")) {
-        //     GameObject wordWin = new WordWin(new Point2D(i, j));
-        //     return wordWin;
+        //     return new WordWin(p);
         // }
 
         return null;
     }
-     
+    
+
+
+
     public static Room readRoom(File f) {
         Room r = new Room();
         r.setName(f.getName());
@@ -150,7 +135,8 @@ public class Room {
                 String line = sc.nextLine();
                 int j = 0;
                 for (char c: line.toCharArray()) {
-                    GameObject object = createStaticObject(c, j, i);
+                    r.addObject(new Dirt(new Point2D(i, j)));
+                    GameObject object = createStaticObject(c, new Point2D(j, i));
                     j++;
 
                     if (object != null) {
@@ -159,25 +145,26 @@ public class Room {
                 }
             }
 
-            sc.nextLine();
-
-            // ler a personagem
-            String[] parts = sc.nextLine().split(",");
-            Baba baba = new Baba(new Point2D(Integer.parseInt(parts[1]),
-                                        Integer.parseInt(parts[2])), parts[3]);
-            r.addObject(baba);
-            r.player = baba;
 
             // ler os objetos moveis
             while (sc.hasNext()) {
-                parts = sc.nextLine().split(",");
-                GameObject object = createMovableObject(parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) continue;
+                
+                String[] parts = line.split(",");
+                Point2D p = new Point2D(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
 
-                if (object != null) {
-                    r.addObject(object);
+                if (parts[0].equals("baba")) {
+                    // r.player = new Baba(p, parts[3]);
+                    r.player = new Baba(p, GameCharacter.directionFromLetter(parts[3]));
+                    r.addObject(r.player);
+                } else {
+                    GameObject object = createMovableObject(parts[0], p);
+                    if (object != null) {
+                        r.addObject(object);
+                    }
                 }
             }
-
 
         } catch(Exception e) {
             System.out.println("Ficheiro Invalido");
@@ -187,11 +174,6 @@ public class Room {
             }
         }
 
-
-        // Baba baba = new Baba(new Point2D(2, 3));
-        // r.addObject(baba);
-        // r.player = baba;
-        INSTANCE = r;
         return r;
     }
 

@@ -15,7 +15,7 @@ public class Dirt extends StaticObject {
 
     @Override
     public int getLayer() {
-        return 5;
+        return 0;
     }
 
     @Override 
