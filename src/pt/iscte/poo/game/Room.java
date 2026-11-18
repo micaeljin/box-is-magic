@@ -127,13 +127,14 @@ public class Room {
             }
             
             // ler os objetos estaveis
-            for (int i = 0; i < rows; i++) {
+            for (int y = 0; y < rows; y++) {
                 String line = sc.nextLine();
-                int j = 0;
+                int x = 0;
                 for (char c: line.toCharArray()) {
-                    r.addObject(new Dirt(new Point2D(i, j)));
-                    GameObject object = createStaticObject(c, new Point2D(j, i));
-                    j++;
+                    Point2D p = new Point2D(x, y);
+                    r.addObject(new Dirt(new Point2D(x, y)));
+                    GameObject object = createStaticObject(c, new Point2D(x, y));
+                    x++;
 
                     if (object != null) {
                         r.addObject(object);
@@ -151,7 +152,6 @@ public class Room {
                 Point2D p = new Point2D(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
 
                 if (parts[0].equals("baba")) {
-                    // r.player = new Baba(p, parts[3]);
                     r.player = new Baba(p, GameCharacter.directionFromLetter(parts[3]));
                     r.addObject(r.player);
                 } else {
