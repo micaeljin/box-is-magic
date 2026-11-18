@@ -17,6 +17,16 @@ import objects.Wall;
 import objects.CrackedWall;
 import objects.Hole;
 
+import objects.Rock;
+import objects.Flag;
+import objects.Box;
+import objects.Bomb;
+import objects.WordBox;
+import objects.WordIs;
+import objects.WordMove;
+import objects.WordStop;
+import objects.WordWin;
+
 public class Room {
 
     private List<GameObject> objects;
@@ -81,27 +91,27 @@ public class Room {
     }
 
     private static GameObject createMovableObject(String s, Point2D p) {
-        // if (s.equals("rock")) {
-        //     return new Rock(p);
-        // } else if (s.equals("flag")) {
-        //     return new Flag(p);
-        // } else if (s.equals("box")) {
-        //     return new Box(p);
-        // } else if (s.equals("bomb")) {
-        //     return new Bomb(p);
-        // } else if (s.equals("wordIs")) {
-        //     return new WordIs(p);
-        // } else if (s.equals("wordBox")) {
-        //     return new WordBox(p);
-        // } else if (s.equals("wordStop")) {
-        //     return new WordStop(p);
-        // } else if (s.equals("wordMove")) {
-        //     return new WordMove(p);
-        // } else if (s.equals("wordWin")) {
-        //     return new WordWin(p);
-        // }
-
-        return null;
+        if (s.equals("rock")) {
+            return new Rock(p);
+        } else if (s.equals("flag")) {
+            return new Flag(p);
+        } else if (s.equals("box")) {
+            return new Box(p);
+        } else if (s.equals("bomb")) {
+            return new Bomb(p);
+        } else if (s.equals("wordIs")) {
+            return new WordIs(p);
+        } else if (s.equals("wordBox")) {
+            return new WordBox(p);
+        } else if (s.equals("wordStop")) {
+            return new WordStop(p);
+        } else if (s.equals("wordMove")) {
+            return new WordMove(p);
+        } else if (s.equals("wordWin")) {
+            return new WordWin(p);
+        } else {
+            return null;
+        }
     }
     
 
@@ -132,8 +142,8 @@ public class Room {
                 int x = 0;
                 for (char c: line.toCharArray()) {
                     Point2D p = new Point2D(x, y);
-                    r.addObject(new Dirt(new Point2D(x, y)));
-                    GameObject object = createStaticObject(c, new Point2D(x, y));
+                    r.addObject(new Dirt(p));
+                    GameObject object = createStaticObject(c, p);
                     x++;
 
                     if (object != null) {
