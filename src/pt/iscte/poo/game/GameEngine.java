@@ -18,7 +18,7 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 1;
+    private int n = 0;
 
     private GameEngine() {
         loadRoom();

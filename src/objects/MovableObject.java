@@ -17,7 +17,7 @@ public abstract class MovableObject extends GameObject {
 
         for (GameObject o: r.getObjectsAt(dest)) {
             if (o instanceof Pushable && ((Pushable) o).canBePushedBy(this)) {
-                if (((Pushable) o).push(d, this)) {
+                if (!((Pushable) o).push(d, this)) {
                     return false;
                 }
             } else if (!o.isTransposable()) {
