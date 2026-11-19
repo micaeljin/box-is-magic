@@ -17,10 +17,11 @@ public class GameEngine implements Observer {
     private Room currentRoom;
     private int lastTickProcessed = 0;
 
+    private int move = 0;
+    private int n = 0;
+
     private GameEngine() {
-        // currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room0.txt"));
-        loadRoom(0);
-        // updateGUI();
+        loadRoom();
     }
 
 	public static GameEngine getInstance() {
@@ -31,11 +32,11 @@ public class GameEngine implements Observer {
         return currentRoom; 
     }
 
-    private void loadRoom(int n) {
+    private void loadRoom() {
     currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + n + ".txt"));
     ImageGUI.getInstance().clearImages();
     ImageGUI.getInstance().addImages(currentRoom.getObjects());
-}
+    }
 
 
     @Override
@@ -46,8 +47,11 @@ public class GameEngine implements Observer {
 
             if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_UP || k == KeyEvent.VK_DOWN) {
                 Direction d = Direction.directionFor(k);
-                getPlayer().move(d);
-                // updateGUI();
+                
+                if (getPlayer().move(d)) {
+                    move += 1;
+                    ImageGUI.getInstance().setStatusMessage("Level: " + n + " Moves: " + move);
+                }
             }
         }
         int t = ImageGUI.getInstance().getTicks();
@@ -60,15 +64,6 @@ public class GameEngine implements Observer {
     private void processTick() {
         lastTickProcessed++;
     }
-
-    public void updateGUI() {
-        if (currentRoom != null) {
-            // ImageGUI.getInstance().clearImages();
-            // ImageGUI.getInstance().addImages(currentRoom.getObjects());
-            GameEngine.getInstance().update(null);
-        }
-    }
-
 
     public Baba getPlayer() {
         return currentRoom.getPlayer();
