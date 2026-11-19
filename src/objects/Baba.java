@@ -12,11 +12,7 @@ public class Baba extends GameCharacter {
 
     @Override
     public String getName() {
-        return "baba-r";
-    }
-
-    public String getName(Direction d) {
-        switch(d) {
+        switch(getDirection()) {
             case UP: return "baba-u";
             case DOWN: return "baba-d";
             case LEFT: return "baba-l";
@@ -28,8 +24,5 @@ public class Baba extends GameCharacter {
     public int getLayer() {
         return 3;
     }
-    
-    public boolean move(Direction d) {
-        return super.move(d);
-    }
+
 }

@@ -27,4 +27,8 @@ public abstract class GameCharacter extends MovableObject {
                 throw new IllegalArgumentException("Direcao invalida: " + letter);
         }
     }
+
+    public Direction getDirection() {
+        return direction;
+    } 
 }

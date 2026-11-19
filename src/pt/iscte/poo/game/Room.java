@@ -75,9 +75,9 @@ public class Room {
 
 
     private static GameObject createStaticObject(char c, Point2D p) {
-        if (c == ' ') {
-            return new Dirt(p);
-        } else if (c == 'X') {
+        // if (c == ' ') {
+        //     return new Dirt(p);
+        if (c == 'X') {
             return new Wall(p);
         } else if (c == 'x') {
             return new CrackedWall(p);
