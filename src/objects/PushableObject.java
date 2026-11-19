@@ -9,12 +9,17 @@ public abstract class PushableObject extends MovableObject implements Pushable {
     }
 
     @Override 
-    public void push(Direction d) {
-
+    public boolean isTransposable() {
+        return false;
     }
 
     @Override 
-    public boolean canPush(GameObject pusher) {
+    public boolean push(Direction d, GameObject pusher) {
+        return move(d);
+    }
+
+    @Override 
+    public boolean canBePushedBy(GameObject pusher) {
         return true;
     }
 }

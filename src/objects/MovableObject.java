@@ -13,10 +13,16 @@ public abstract class MovableObject extends GameObject {
 
     public boolean move(Direction d) {
         Point2D dest = getPosition().plus(d.asVector());
-        
         Room r = GameEngine.getInstance().getCurrentRoom();
-        if(!r.canMove(dest)) {
-            return false;
+
+        for (GameObject o: r.getObjectsAt(dest)) {
+            if (o instanceof Pushable && ((Pushable) o).canBePushedBy(this)) {
+                if (((Pushable) o).push(d, this)) {
+                    return false;
+                }
+            } else if (!o.isTransposable()) {
+                return false;
+            }
         }
         
         setPosition(dest);

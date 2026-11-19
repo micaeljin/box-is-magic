@@ -16,4 +16,14 @@ public class Box extends PushableObject implements Interactable{
     public int getLayer() {
         return 2;
     }   
+
+    @Override 
+    public boolean isTransposable() {
+        return true;
+    }
+
+    @Override 
+    public boolean canBePushedBy(GameObject pusher) {
+        return false;
+    }
 }

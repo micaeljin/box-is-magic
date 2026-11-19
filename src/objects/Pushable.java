@@ -2,7 +2,7 @@ package objects;
 import pt.iscte.poo.utils.Direction;
 
 public interface Pushable {
-    void push(Direction d);
+    boolean push(Direction d, GameObject pusher);
 
-    boolean canPush(GameObject pusher);
+    boolean canBePushedBy(GameObject pusher);
 }

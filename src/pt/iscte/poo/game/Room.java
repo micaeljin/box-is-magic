@@ -53,7 +53,7 @@ public class Room {
         return objects;
     }
 
-    private List<GameObject> getObjects(Point2D position) {
+    public List<GameObject> getObjectsAt(Point2D position) {
         List<GameObject> res = new ArrayList<>();
         for (GameObject ob: objects) {
             if (ob.getPosition().equals(position)) {
@@ -64,7 +64,7 @@ public class Room {
     }
 
     public boolean canMove(Point2D position) {
-        List<GameObject> objs = getObjects(position);
+        List<GameObject> objs = getObjectsAt(position);
         for (GameObject obj: objs) {
             if (!obj.isTransposable()) {
                 return false;
@@ -73,10 +73,7 @@ public class Room {
         return true;
     }
 
-
     private static GameObject createStaticObject(char c, Point2D p) {
-        // if (c == ' ') {
-        //     return new Dirt(p);
         if (c == 'X') {
             return new Wall(p);
         } else if (c == 'x') {
