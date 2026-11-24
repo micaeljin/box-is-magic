@@ -18,10 +18,11 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 3;
+    private int n = 0;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
+    private boolean gameOver = false;
 
     private GameEngine() {
         loadRoom();
@@ -36,9 +37,10 @@ public class GameEngine implements Observer {
     }
 
     private void loadRoom() {
-    currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + n + ".txt"));
-    ImageGUI.getInstance().clearImages();
-    ImageGUI.getInstance().addImages(currentRoom.getObjects());
+        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + n + ".txt"));
+        ImageGUI.getInstance().clearImages();
+        ImageGUI.getInstance().addImages(currentRoom.getObjects());
+        updateStatus();
     }
 
     public void requestRestart() {
@@ -49,10 +51,14 @@ public class GameEngine implements Observer {
         nextLevelRequested = true;
     }
 
+    public void updateStatus() {
+        ImageGUI.getInstance().setStatusMessage("Level: " + n + " Moves: " + move);
+    }
+
     @Override
     public void update(Observed source) {
 
-        if (ImageGUI.getInstance().wasKeyPressed()) {
+        if (ImageGUI.getInstance().wasKeyPressed() && !gameOver) {
             int k = ImageGUI.getInstance().keyPressed();
 
             if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_UP || k == KeyEvent.VK_DOWN) {
@@ -60,7 +66,7 @@ public class GameEngine implements Observer {
                 
                 if (getPlayer().move(d)) {
                     move += 1;
-                    ImageGUI.getInstance().setStatusMessage("Level: " + n + " Moves: " + move);
+                    updateStatus();
                 }
             } else if (k == KeyEvent.VK_R) {
                 requestRestart();
@@ -81,6 +87,7 @@ public class GameEngine implements Observer {
                 loadRoom();
             } else {
                 ImageGUI.getInstance().showMessage("Fim", "Ganhaste o jogo!");
+                gameOver = true;
             }
         }
 
