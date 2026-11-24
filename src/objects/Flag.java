@@ -26,4 +26,9 @@ public class Flag extends PushableObject implements Interactable{
     public boolean canBePushedBy(GameObject pusher) {
         return !(pusher instanceof GameCharacter);
     }
+
+    @Override 
+    public void interact(GameObject other) {
+        
+    }
 }

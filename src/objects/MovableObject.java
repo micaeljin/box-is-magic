@@ -26,6 +26,13 @@ public abstract class MovableObject extends GameObject {
         }
         
         setPosition(dest);
+
+        for (GameObject o: r.getObjectsAt(dest)) {
+            if (o != this && o instanceof Interactable) {
+                ((Interactable) o).interact(this);
+            }
+        }
+        
         return true;
     }
 }

@@ -1,5 +1,6 @@
 package objects;
 
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -23,6 +24,11 @@ public class Baba extends GameCharacter {
     @Override
     public int getLayer() {
         return 3;
+    }
+
+    @Override 
+    public void fallInto(Hole hole) {
+        GameEngine.getInstance().requestRestart();
     }
 
 }

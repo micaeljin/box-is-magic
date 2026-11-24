@@ -18,7 +18,9 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 0;
+    private int n = 3;
+
+    private boolean restartRequested = false;
 
     private GameEngine() {
         loadRoom();
@@ -38,6 +40,9 @@ public class GameEngine implements Observer {
     ImageGUI.getInstance().addImages(currentRoom.getObjects());
     }
 
+    public void requestRestart() {
+        restartRequested = true;
+    }
 
     @Override
     public void update(Observed source) {
@@ -52,8 +57,18 @@ public class GameEngine implements Observer {
                     move += 1;
                     ImageGUI.getInstance().setStatusMessage("Level: " + n + " Moves: " + move);
                 }
+            } else if (k == KeyEvent.VK_R) {
+                requestRestart();
             }
         }
+
+
+        if (restartRequested) {
+            restartRequested = false;
+            loadRoom();
+        }
+
+
         int t = ImageGUI.getInstance().getTicks();
         while (lastTickProcessed < t) {
             processTick();

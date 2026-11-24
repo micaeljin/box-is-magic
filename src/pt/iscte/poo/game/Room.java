@@ -7,6 +7,7 @@ import java.util.List;
 import objects.Baba;
 import objects.Dirt;
 import objects.GameObject;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.Scanner;
@@ -47,6 +48,11 @@ public class Room {
 
     public void addObject(GameObject obj) {
         objects.add(obj);
+    }
+
+    public void removeObject(GameObject obj) {
+        objects.remove(obj);
+        ImageGUI.getInstance().removeImage(obj);
     }
 
     public List<GameObject> getObjects() {

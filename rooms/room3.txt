@@ -1,0 +1,25 @@
+10,10
+XXXXXXXXXXX
+X         X
+X H       X
+X         X
+X         X
+X         X
+X         X
+XX        X
+X  xx   ggX
+XXXXXXXXXXX
+
+baba,3,3,r
+box,3,4
+box,3,5
+wordBox,5,3
+wordIs,5,4
+wordMove,5,6
+wordStop,7,3
+wordBox,7,7
+wordIs,7,5
+wordWin,8,6
+rock,8,7
+bomb,8,3
+flag,4,6
