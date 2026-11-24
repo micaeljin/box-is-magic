@@ -1,5 +1,8 @@
 package objects;
 
+
+import pt.iscte.poo.game.GameEngine;
+import pt.iscte.poo.game.RuleManager;
 import pt.iscte.poo.utils.Point2D;
 
 public class Box extends PushableObject implements Interactable{
@@ -18,16 +21,20 @@ public class Box extends PushableObject implements Interactable{
     @Override 
     public int getLayer() {
         return 2;
-    }   
+    }
+
+    private RuleManager rules() {
+        return GameEngine.getInstance().getRules();
+    }
 
     @Override 
     public boolean isTransposable() {
-        return true;
+        return !rules().isActive(Property.STOP);
     }
 
     @Override 
     public boolean canBePushedBy(GameObject pusher) {
-        return !inHole;
+        return !inHole && rules().isActive(Property.MOVE);
     }
 
     @Override 
@@ -38,6 +45,8 @@ public class Box extends PushableObject implements Interactable{
 
     @Override 
     public void interact(GameObject other) {
-        
+        if (other instanceof GameCharacter && rules().isActive(Property.WIN)) {
+            GameEngine.getInstance().requestNextLevel();
+        }
     }
 }

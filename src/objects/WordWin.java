@@ -16,4 +16,9 @@ public class WordWin extends PropertyWord{
     public int getLayer() {
         return 2;
     }
+
+    @Override 
+    public Property getProperty() {
+        return Property.WIN;
+    }
 }

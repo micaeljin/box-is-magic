@@ -16,4 +16,9 @@ public class WordStop extends PropertyWord{
     public int getLayer() {
         return 2;
     }
+
+    @Override 
+    public Property getProperty() {
+        return Property.STOP;
+    }
 }

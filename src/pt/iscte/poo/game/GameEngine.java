@@ -18,11 +18,13 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 0;
+    private int n = 3;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
     private boolean gameOver = false;
+
+    private RuleManager rules = new RuleManager();
 
     private GameEngine() {
         loadRoom();
@@ -34,6 +36,10 @@ public class GameEngine implements Observer {
 
     public Room getCurrentRoom() { 
         return currentRoom; 
+    }
+
+    public RuleManager getRules() {
+        return rules;
     }
 
     private void loadRoom() {
@@ -66,6 +72,12 @@ public class GameEngine implements Observer {
                 
                 if (getPlayer().move(d)) {
                     move += 1;
+                    
+                    rules.update(currentRoom);
+                    if (rules.hasConflict()) {
+                        requestRestart();
+                    }
+
                     updateStatus();
                 }
             } else if (k == KeyEvent.VK_R) {
