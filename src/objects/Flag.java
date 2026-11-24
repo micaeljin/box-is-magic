@@ -1,5 +1,6 @@
 package objects;
 
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.utils.Point2D;
 
 public class Flag extends PushableObject implements Interactable{
@@ -29,6 +30,8 @@ public class Flag extends PushableObject implements Interactable{
 
     @Override 
     public void interact(GameObject other) {
-        
+        if (other instanceof GameCharacter) {
+            GameEngine.getInstance().requestNextLevel();
+        }
     }
 }

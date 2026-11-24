@@ -21,6 +21,7 @@ public class GameEngine implements Observer {
     private int n = 3;
 
     private boolean restartRequested = false;
+    private boolean nextLevelRequested = false;
 
     private GameEngine() {
         loadRoom();
@@ -42,6 +43,10 @@ public class GameEngine implements Observer {
 
     public void requestRestart() {
         restartRequested = true;
+    }
+
+    public void requestNextLevel() {
+        nextLevelRequested = true;
     }
 
     @Override
@@ -66,6 +71,17 @@ public class GameEngine implements Observer {
         if (restartRequested) {
             restartRequested = false;
             loadRoom();
+        }
+
+        if (nextLevelRequested) {
+            nextLevelRequested = false;
+            n++;
+
+            if (new File(ROOMS_DIRECTORY + "/room" + n + ".txt").exists()) {
+                loadRoom();
+            } else {
+                ImageGUI.getInstance().showMessage("Fim", "Ganhaste o jogo!");
+            }
         }
 
 
