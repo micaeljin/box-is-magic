@@ -31,4 +31,9 @@ public class Baba extends GameCharacter {
         GameEngine.getInstance().requestRestart();
     }
 
+    @Override 
+    public void destroy() {
+        GameEngine.getInstance().requestRestart();
+    }
+
 }

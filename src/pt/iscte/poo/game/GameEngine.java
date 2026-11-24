@@ -2,8 +2,11 @@ package pt.iscte.poo.game;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 import objects.Baba;
+import objects.GameObject;
+import objects.Tickable;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
@@ -18,7 +21,7 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 4;
+    private int n = 3;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
@@ -85,6 +88,10 @@ public class GameEngine implements Observer {
             }
         }
 
+        int t = ImageGUI.getInstance().getTicks();
+        while (lastTickProcessed < t) {
+            processTick();
+        }
 
         if (restartRequested) {
             restartRequested = false;
@@ -103,16 +110,22 @@ public class GameEngine implements Observer {
             }
         }
 
-
-        int t = ImageGUI.getInstance().getTicks();
-        while (lastTickProcessed < t) {
-            processTick();
-        }
         ImageGUI.getInstance().update();
     }
 
     private void processTick() {
         lastTickProcessed++;
+
+        for (GameObject o: new ArrayList<>(currentRoom.getObjects())) {
+            if (o instanceof Tickable) {
+                ((Tickable) o).tick();
+            }
+        }
+
+        rules.update(currentRoom);
+        if (rules.hasConflict()) {
+            requestRestart();
+        }
     }
 
     public Baba getPlayer() {

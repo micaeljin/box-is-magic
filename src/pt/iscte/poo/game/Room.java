@@ -50,6 +50,11 @@ public class Room {
         objects.add(obj);
     }
 
+    public void addToGame(GameObject obj) {
+        objects.add(obj);
+        ImageGUI.getInstance().addImage(obj);
+    }
+
     public void removeObject(GameObject obj) {
         objects.remove(obj);
         ImageGUI.getInstance().removeImage(obj);

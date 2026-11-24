@@ -25,6 +25,9 @@ public abstract class GameObject implements ImageTile {
 
     public void fallInto(Hole hole) {
         GameEngine.getInstance().getCurrentRoom().removeObject(this);
-    } 
+    }
 
+    public void destroy() {
+        GameEngine.getInstance().getCurrentRoom().removeObject(this);
+    }
 }

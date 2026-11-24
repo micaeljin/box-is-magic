@@ -7,4 +7,9 @@ public abstract class StaticObject extends GameObject {
     public StaticObject(Point2D position) {
         super(position);
     }
+
+    @Override 
+    public void destroy() {
+        return;
+    }
 }
