@@ -18,7 +18,7 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 3;
+    private int n = 4;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
