@@ -5,7 +5,6 @@ import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.game.Room;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends PushableObject implements Tickable{

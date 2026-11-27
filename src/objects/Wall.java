@@ -2,7 +2,6 @@ package objects;
 
 import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.Room;
-import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
 
 public class Wall extends StaticObject {

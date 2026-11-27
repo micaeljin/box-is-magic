@@ -21,13 +21,15 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 3;
+    private int n = 100;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
     private boolean gameOver = false;
 
     private RuleManager rules = new RuleManager();
+    private HighScores highscores = new HighScores("src/pt/iscte/poo/game/highscores.txt");
+    private double startTime;
 
     private GameEngine() {
         loadRoom();
@@ -50,6 +52,9 @@ public class GameEngine implements Observer {
         ImageGUI.getInstance().clearImages();
         ImageGUI.getInstance().addImages(currentRoom.getObjects());
         updateStatus();
+
+        highscores.load();
+        startTime =  ImageGUI.getInstance().getTicks();
     }
 
     public void requestRestart() {
@@ -62,6 +67,14 @@ public class GameEngine implements Observer {
 
     public void updateStatus() {
         ImageGUI.getInstance().setStatusMessage("Level: " + n + " Moves: " + move);
+    }
+
+    public void endGame() {
+        gameOver = true;
+        double endTime = ImageGUI.getInstance().getTicks() - startTime;
+        highscores.add(new Score(move, endTime));
+        ImageGUI.getInstance().showMessage("Ganhaste o jogo!", highscores.showHighScores());
+        highscores.save();
     }
 
     @Override
@@ -105,8 +118,9 @@ public class GameEngine implements Observer {
             if (new File(ROOMS_DIRECTORY + "/room" + n + ".txt").exists()) {
                 loadRoom();
             } else {
-                ImageGUI.getInstance().showMessage("Fim", "Ganhaste o jogo!");
-                gameOver = true;
+                // ImageGUI.getInstance().showMessage("Fim", "Ganhaste o jogo!");
+                // gameOver = true;
+                endGame();
             }
         }
 
