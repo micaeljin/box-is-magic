@@ -2,6 +2,8 @@ package pt.iscte.poo.game;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import objects.Baba;
@@ -21,7 +23,7 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 100;
+    private int n = 5;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
@@ -48,13 +50,24 @@ public class GameEngine implements Observer {
     }
 
     private void loadRoom() {
-        currentRoom = Room.readRoom(new File(ROOMS_DIRECTORY + "/room" + n + ".txt"));
-        ImageGUI.getInstance().clearImages();
-        ImageGUI.getInstance().addImages(currentRoom.getObjects());
-        updateStatus();
+        File f = new File(ROOMS_DIRECTORY + "/room" + n + ".txt");
+        if (!f.exists()) {
+            endGame();
+            return;
+        }
 
-        highscores.load();
-        startTime =  ImageGUI.getInstance().getTicks();
+        try {
+            currentRoom = Room.readRoom(f);
+            ImageGUI.getInstance().clearImages();
+            ImageGUI.getInstance().addImages(currentRoom.getObjects());
+            updateStatus();
+            
+            highscores.load();
+            startTime =  ImageGUI.getInstance().getTicks();
+        } catch (IOException e) {
+            ImageGUI.getInstance().showMessage("Nivel invalido", "Nivel invalido");
+            n++;
+        }
     }
 
     public void requestRestart() {

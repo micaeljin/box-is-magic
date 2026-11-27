@@ -1,6 +1,8 @@
 package pt.iscte.poo.game;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,28 +126,51 @@ public class Room {
     
 
 
-    public static Room readRoom(File f) {
+    public static Room readRoom(File f) throws FileNotFoundException, IOException {
         Room r = new Room();
         r.setName(f.getName());
 
         Scanner sc = null; 
         try {
             sc = new Scanner(f);
-            int rows = 0;
-            int cols = 0;
-            if (sc.hasNextLine()) {
-                String[] parts = sc.nextLine().split(",");
-                rows = Integer.parseInt(parts[1]);
-                cols = Integer.parseInt(parts[0]);
+
+            if (!sc.hasNextLine()) {
+                throw new IOException("ficheiro vazio");
             }
 
-            if (rows <= 0 || cols <= 0) {
-                System.out.println("Dimensoes de mapa invalida");
-                return null;
+            String[] parts = sc.nextLine().trim().split(",");
+            if (parts.length != 2) {
+                throw new IOException("linha das dimensoes invalida");
             }
             
-            // ler os objetos estaveis
+            int rows = Integer.parseInt(parts[1]);
+            int cols = Integer.parseInt(parts[0]);
+            
+            if (rows <= 0 || cols <= 0) {
+                throw new IOException("dimensoes invalidas");
+            }
+
+            // int rows = 0;
+            // int cols = 0;
+            // if (sc.hasNextLine()) {
+            //     String[] parts = sc.nextLine().split(",");
+            //     rows = Integer.parseInt(parts[1]);
+            //     cols = Integer.parseInt(parts[0]);
+            // }
+
+            // if (rows <= 0 || cols <= 0) {
+            //     System.out.println("Dimensoes de mapa invalida");
+            //     return null;
+            // }
+
+            
+            // ler os objetos estaticos
             for (int y = 0; y < rows; y++) {
+
+                if (!sc.hasNextLine()) {
+                    throw new IOException("o mapa tem menos de " + rows + " linhas");
+                }
+                
                 String line = sc.nextLine();
                 int x = 0;
                 for (char c: line.toCharArray()) {
@@ -153,40 +178,90 @@ public class Room {
                     r.addObject(new Dirt(p));
                     GameObject object = createStaticObject(c, p);
                     x++;
-
+                    
                     if (object != null) {
                         r.addObject(object);
                     }
+                }
+
+                if (x != cols) {
+                    throw new IOException("o mapa tem menos de " + cols + " colunas");
                 }
             }
 
 
             // ler os objetos moveis
-            while (sc.hasNext()) {
+            // while (sc.hasNext()) {
+            //     String line = sc.nextLine().trim();
+            //     if (line.isEmpty()) continue;
+                
+            //     String[] parts = line.split(",");
+            //     Point2D p = new Point2D(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+
+            //     if (parts[0].equals("baba")) {
+            //         r.player = new Baba(p, GameCharacter.directionFromLetter(parts[3]));
+            //         r.addObject(r.player);
+            //     } else {
+            //         GameObject object = createMovableObject(parts[0], p);
+            //         if (object != null) {
+            //             r.addObject(object);
+            //         }
+            //     }
+            // }
+
+            while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 if (line.isEmpty()) continue;
-                
-                String[] parts = line.split(",");
-                Point2D p = new Point2D(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
 
-                if (parts[0].equals("baba")) {
-                    r.player = new Baba(p, GameCharacter.directionFromLetter(parts[3]));
+                parts = line.split(",");
+                String name = parts[0];
+                boolean isBaba = name.equals("baba");
+
+                if ((isBaba && parts.length != 4) || (!isBaba && parts.length != 3)) {
+                    throw new IOException("numero de campos errado em " + line);
+                }
+
+                int x = Integer.parseInt(parts[1]);
+                int y = Integer.parseInt(parts[2]);
+
+                if (x < 0 || x >= cols || y < 0 || y >= cols) {
+                    throw new IOException("posicao (" + x + "," + y + ") fora do mapa");
+                }
+
+                Point2D p = new Point2D(x, y);
+
+                if (isBaba) {
+                    if (r.player != null) {
+                        throw new IOException("o nivel tem mais do que uma baba");
+                    }
+                    try {
+                        r.player = new Baba(p, GameCharacter.directionFromLetter(parts[3]));
+                    } catch (IllegalArgumentException e) {
+                        throw new IOException("direcao desconhecida");
+                    }
                     r.addObject(r.player);
                 } else {
-                    GameObject object = createMovableObject(parts[0], p);
-                    if (object != null) {
-                        r.addObject(object);
+                    GameObject object = createMovableObject(name, p);
+                    if (object == null) {
+                        throw new IOException("objeto desconhecido");
                     }
+                    r.addObject(object);
                 }
             }
 
-        } catch(Exception e) {
+            
+            if (r.player == null) {
+                throw new IOException("o nivel nao tem baba");
+            }
+
+        } catch(IOException | NumberFormatException e) {
             System.out.println("Ficheiro Invalido");
         } finally {
             if (sc != null) {
                 sc.close();
             }
         }
+
 
         return r;
     }
