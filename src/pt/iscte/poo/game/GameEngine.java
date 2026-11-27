@@ -64,14 +64,11 @@ public class GameEngine implements Observer {
             updateStatus();
             
             highscores.load();
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             ImageGUI.getInstance().showMessage("Nivel invalido", "Nivel invalido");
+            ImageGUI.getInstance().showMessage("Nivel invalido", e.getMessage());
             n++;
-            f = new File(ROOMS_DIRECTORY + "/room" + n + ".txt");
-            if (f.exists()) {
-                loadRoom();
-            }
-        
+            loadRoom();
         }
     }
 
@@ -119,9 +116,12 @@ public class GameEngine implements Observer {
             }
         }
 
-        int t = ImageGUI.getInstance().getTicks();
-        while (lastTickProcessed < t) {
-            processTick();
+
+        if (currentRoom != null && !gameOver) {
+            int t = ImageGUI.getInstance().getTicks();
+            while (lastTickProcessed < t) {
+                processTick();
+            }
         }
 
         if (restartRequested) {
@@ -159,6 +159,6 @@ public class GameEngine implements Observer {
     }
 
     public Baba getPlayer() {
-        return currentRoom.getPlayer();
+        return currentRoom == null ? null : currentRoom.getPlayer();
     }
 }
