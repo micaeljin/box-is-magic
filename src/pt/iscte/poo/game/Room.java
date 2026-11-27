@@ -150,19 +150,6 @@ public class Room {
                 throw new IOException("dimensoes invalidas");
             }
 
-            // int rows = 0;
-            // int cols = 0;
-            // if (sc.hasNextLine()) {
-            //     String[] parts = sc.nextLine().split(",");
-            //     rows = Integer.parseInt(parts[1]);
-            //     cols = Integer.parseInt(parts[0]);
-            // }
-
-            // if (rows <= 0 || cols <= 0) {
-            //     System.out.println("Dimensoes de mapa invalida");
-            //     return null;
-            // }
-
             
             // ler os objetos estaticos
             for (int y = 0; y < rows; y++) {
@@ -189,26 +176,6 @@ public class Room {
                 }
             }
 
-
-            // ler os objetos moveis
-            // while (sc.hasNext()) {
-            //     String line = sc.nextLine().trim();
-            //     if (line.isEmpty()) continue;
-                
-            //     String[] parts = line.split(",");
-            //     Point2D p = new Point2D(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
-
-            //     if (parts[0].equals("baba")) {
-            //         r.player = new Baba(p, GameCharacter.directionFromLetter(parts[3]));
-            //         r.addObject(r.player);
-            //     } else {
-            //         GameObject object = createMovableObject(parts[0], p);
-            //         if (object != null) {
-            //             r.addObject(object);
-            //         }
-            //     }
-            // }
-
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 if (line.isEmpty()) continue;
@@ -224,7 +191,7 @@ public class Room {
                 int x = Integer.parseInt(parts[1]);
                 int y = Integer.parseInt(parts[2]);
 
-                if (x < 0 || x >= cols || y < 0 || y >= cols) {
+                if (x < 0 || x >= cols || y < 0 || y >= rows) {
                     throw new IOException("posicao (" + x + "," + y + ") fora do mapa");
                 }
 
@@ -254,8 +221,6 @@ public class Room {
                 throw new IOException("o nivel nao tem baba");
             }
 
-        } catch(IOException | NumberFormatException e) {
-            System.out.println("Ficheiro Invalido");
         } finally {
             if (sc != null) {
                 sc.close();

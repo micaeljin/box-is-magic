@@ -23,7 +23,7 @@ public class GameEngine implements Observer {
     private int lastTickProcessed = 0;
 
     private int move = 0;
-    private int n = 5;
+    private int n = 2;
 
     private boolean restartRequested = false;
     private boolean nextLevelRequested = false;
@@ -35,6 +35,7 @@ public class GameEngine implements Observer {
 
     private GameEngine() {
         loadRoom();
+        startTime =  ImageGUI.getInstance().getTicks();
     }
 
 	public static GameEngine getInstance() {
@@ -63,10 +64,14 @@ public class GameEngine implements Observer {
             updateStatus();
             
             highscores.load();
-            startTime =  ImageGUI.getInstance().getTicks();
         } catch (IOException e) {
             ImageGUI.getInstance().showMessage("Nivel invalido", "Nivel invalido");
             n++;
+            f = new File(ROOMS_DIRECTORY + "/room" + n + ".txt");
+            if (f.exists()) {
+                loadRoom();
+            }
+        
         }
     }
 
@@ -131,8 +136,6 @@ public class GameEngine implements Observer {
             if (new File(ROOMS_DIRECTORY + "/room" + n + ".txt").exists()) {
                 loadRoom();
             } else {
-                // ImageGUI.getInstance().showMessage("Fim", "Ganhaste o jogo!");
-                // gameOver = true;
                 endGame();
             }
         }
